@@ -24,7 +24,6 @@ def handle_click_on_grid(grid, click_color):
         pos = pygame.mouse.get_pos()
         column = pos[0] // (WIDTH + MARGIN)
         row = pos[1] // (HEIGHT + MARGIN)
-        print(grid[row][column])
         if not grid[row][column]:
             grid[row][column] = click_color
             if click_color == 1:
@@ -55,10 +54,27 @@ def draw_grid(grid, screen):
                               WIDTH,
                               HEIGHT])
 
+def path_finding(grid):
+    pass
+
+'''
+    Find the position of a cell in the grid.
+'''
+def find_cell_position(grid, value):
+    position = []
+    for row in grid:
+        for column in row:
+            if column == value:
+                position = [grid.index(row), row.index(column)]
+                break
+    return position
+
 '''
     Start function
 '''
 def main():
+
+    print(str(find_cell_position([[1,0], [0,0]], 1)))
 
     grid = []
     for row in range(20):
@@ -88,6 +104,10 @@ def main():
             if event.type == pygame.MOUSEMOTION:
                 if dragging:
                     click_color = handle_click_on_grid(grid, click_color)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    path_finding(grid)
+
         screen.fill(BLACK)
         draw_grid(grid, screen)
 
